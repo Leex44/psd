@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPA-PMO Western Leyte/Biliran Transaction Process Flow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .process-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .process-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .process-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: currentColor;
+            opacity: 0.2;
+        }
+        .step-connector {
+            position: relative;
+        }
+        .step-connector:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 20px;
+            background-color: currentColor;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+        .section-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            font-size: 28px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .document-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 8px;
+        }
+        .document-item:before {
+            content: '\f15b';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: currentColor;
+            opacity: 0.7;
+        }
+        .nav-tab {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-tab:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background-color: currentColor;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+        }
+        .nav-tab.active:after {
+            width: 80%;
+        }
+        @media (max-width: 768px) {
+            .step-connector:after {
+                display: none;
+            }
+            .section-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+        }
+        .floating-help {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 50;
+        }
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="flex justify-center mb-4">
+           <!--      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Seal_of_the_Philippine_Ports_Authority.svg/1200px-Seal_of_the_Philippine_Ports_Authority.svg.png" 
+                     alt="PPA Logo" class="h-20 w-20"> -->
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-800 mb-2">PPA-PMO Western Leyte/Biliran</h1>
+            <h2 class="text-2xl md:text-3xl font-semibold text-gray-700">Transaction Process Flow</h2>
+            <div class="w-24 h-1 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+            <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
+                This portal provides a step-by-step guide to all transaction processes at the Philippine Ports Authority - Port Management Office of Western Leyte/Biliran.
+            </p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap justify-center mb-8 gap-2 md:gap-4">
+            <button onclick="showSection('entrance')" class="px-4 py-3 md:px-6 md:py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-200 transition nav-tab active">
+                <i class="fas fa-ship mr-2"></i>Entrance Formalities
+            </button>
+            <button onclick="showSection('clearance')" class="px-4 py-3 md:px-6 md:py-3 bg-blue-100 text-white rounded-lg font-medium hover:bg-blue-200 transition nav-tab active">
+                <i class="fas fa-ship mr-2"></i>Clearance Formalities
+            </button>
+
+            <button onclick="showSection('withdrawal')" class="px-4 py-3 md:px-6 md:py-3 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 transition nav-tab">
+                <i class="fas fa-truck mr-2"></i>Cargo Withdrawal
+            </button>
+            <button onclick="showSection('entry')" class="px-4 py-3 md:px-6 md:py-3 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 transition nav-tab">
+                <i class="fas fa-boxes-packing mr-2"></i>Cargo Entry
+            </button>
+            <button onclick="showSection('permits')" class="px-4 py-3 md:px-6 md:py-3 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 transition nav-tab">
+                <i class="fas fa-file-signature mr-2"></i>Other Permits
+            </button>
+        </div>
+
+        <!-- Entrance Section -->
+        <section id="entrance-section" class="process-section">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border border-gray-100">
+                <div class="p-6 bg-gradient-to-r from-blue-700 to-blue-600 text-white">
+                    <div class="section-icon bg-blue-800">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-center">Entrance Formalities</h2>
+                    <p class="text-center text-blue-100 mt-2">Vessel arrival and berthing procedures</p>
+                </div>
+                <div class="p-6">
+                    <!-- Step 1 -->
+                    <div class="process-card bg-blue-50 rounded-lg p-6 mb-8 relative step-connector text-blue-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">1</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Pre-Arrival Notification</h3>
+                                <p class="mb-3">Shipping agent submits Advance NOA (Notice of Arrival) and ABA (Application for Berth / Anchorage) prior Arrival of Vessel via:</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+                                        <i class="fas fa-globe mr-2"></i> <a href="https://iports.ppa.com.ph/">iPorts System </a>
+                                    </span>
+
+
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                    <h4 class="font-medium text-blue-700 mb-2 flex items-center">
+                                        <i class="fas fa-clock mr-2"></i> Submission Timeline
+                                    </h4>
+                                    <p class="text-sm text-gray-700">Must be submitted at least 24 hours before vessel arrival for proper scheduling and preparation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="process-card bg-blue-50 rounded-lg p-6 mb-8 relative step-connector text-blue-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">2</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Proceed to Window 1 for Submission of Vessel Documents</h3>
+                                <p class="mb-3">Upon arrival, the vessel agent must complete the following:</p>
+                                <ul class="space-y-2 mb-4">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-blue-500 mr-2 mt-1"></i>
+                                        <span>Accomplish Dockage Report</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-blue-500 mr-2 mt-1"></i>
+                                        <span>Accomplish Vessel's Information Sheet (If the Vessel is not yet Registered to iPorts system)</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-blue-500 mr-2 mt-1"></i>
+                                        <span>Fill out Vessel's Logbook</span>
+                                    </li>
+                                </ul>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                    <h4 class="font-medium text-blue-700 mb-2">Required Documents:</h4>
+                                    <ul class="space-y-2">
+                                        <li class="document-item">Vessel's Coasting Manifest</li>
+                                        <li class="document-item"> Vessel's Roll Book</li>
+                                        <li class="document-item">Bill of Lading (for Wharfage Cargo on Board)</li>
+                                        <li class="document-item">Application for Berth / Anchorage Form</li>
+                                        <li class="document-item">Certificate of Registry (for Vessel arriving for the first time and not yet Registered to iPorts system)</li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="process-card bg-blue-50 rounded-lg p-6 mb-8 relative step-connector text-blue-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">3</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Clearance from Other Agencies</h3>
+                                <p class="mb-3">Coordinate with the following agencies for necessary clearances:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                        <h4 class="font-medium text-blue-700 mb-1 flex items-center">
+                                            <i class="fas fa-landmark mr-2"></i>Bureau of Customs (BOC)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For customs clearance and inspection of cargo</p>
+                                        <div class="mt-2 text-xs text-blue-600">
+                                            <i class="fas fa-map-marker-alt mr-1"></i> Office Location: Port Area
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                        <h4 class="font-medium text-blue-700 mb-1 flex items-center">
+                                            <i class="fas fa-shield-virus mr-2"></i>Bureau of Quarantine (BOQ)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For health and sanitation clearance</p>
+                                        <div class="mt-2 text-xs text-blue-600">
+                                            <i class="fas fa-phone-alt mr-1"></i> Contact: (053) 123-4567
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                        <h4 class="font-medium text-blue-700 mb-1 flex items-center">
+                                            <i class="fas fa-anchor mr-2"></i>Philippine Coast Guard (PCG)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For maritime safety inspection</p>
+                                        <div class="mt-2 text-xs text-blue-600">
+                                            <i class="fas fa-clock mr-1"></i> Operating Hours: 8AM-5PM
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                        <h4 class="font-medium text-blue-700 mb-1 flex items-center">
+                                            <i class="fas fa-ship mr-2"></i>MARINA (if applicable)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For vessel documentation verification</p>
+                                        <div class="mt-2 text-xs text-blue-600">
+                                            <i class="fas fa-envelope mr-1"></i> Email: marina@domain.com
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-blue-100 border-l-4 border-blue-500 p-4 mb-4">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-info-circle text-blue-700"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-blue-700">
+                                                <strong>Note:</strong> Some agencies may require additional documents specific to your vessel or cargo type. Please check with each agency for complete requirements.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="process-card bg-blue-50 rounded-lg p-6 text-blue-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">4</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Issuance of Entrance Clearance</h3>
+                                <p class="mb-3">PPA evaluates compliance with all requirements:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <div class="flex items-center">
+                                            <div class="bg-green-100 text-green-800 p-2 rounded-full mr-3">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-green-700">If Compliant</h4>
+                                                <p class="text-sm text-gray-600">PPA issues Entrance Clearance within 1-2 hours after document verification</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                        <div class="flex items-center">
+                                            <div class="bg-blue-100 text-blue-800 p-2 rounded-full mr-3">
+                                                <i class="fas fa-anchor"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-blue-700">Vessel Berthing</h4>
+                                                <p class="text-sm text-gray-600">Vessel is authorized to berth at the port according to assigned schedule</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                    <h4 class="font-medium text-blue-700 mb-2 flex items-center">
+                                        <i class="fas fa-file-invoice-dollar mr-2"></i> Applicable Fees
+                                    </h4>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fee Type</th>
+                                                    <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Basis</th>
+                                                    <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <tr>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Dockage Fee</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Per GT per day</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">₱0.50</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Berthing Fee</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Per GT</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">₱0.25</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+<!-- Clearance Section -->
+        <section id="clearance-section" class="process-section">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border border-yellow-100">
+                <div class="p-6 bg-gradient-to-r from-yellow-700 to-yellow-600 text-white">
+                    <div class="section-icon bg-yellow-800">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-center">Clearance Formalities</h2>
+                    <p class="text-center text-yellow-100 mt-2">Vessel Departure Clearance procedures</p>
+                </div>
+                <div class="p-6">
+                    <!-- Step 1 -->
+                    <div class="process-card bg-yellow-50 rounded-lg p-6 mb-8 relative step-connector text-yellow-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-yellow-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">1</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Pre-Arrival Notification</h3>
+                                <p class="mb-3">Shipping agent submits Advance NOA (Notice of Arrival) and ABA (Application for Berth / Anchorage) prior Arrival of Vessel via:</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm flex items-center">
+                                        <i class="fas fa-globe mr-2"></i> <a href="https://www.ppa.com.ph/sites/default/files/ppa_document/4_Withdrawal_of_Cargoes.pdf"> iPorts System </a>
+                                    </span>
+                                   
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-yellow-200">
+                                    <h4 class="font-medium text-yellow-700 mb-2 flex items-center">
+                                        <i class="fas fa-clock mr-2"></i> Submission Timeline
+                                    </h4>
+                                    <p class="text-sm text-gray-700">Must be submitted at least 24 hours before vessel arrival for proper scheduling and preparation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="process-card bg-yellow-50 rounded-lg p-6 mb-8 relative step-connector text-yellow-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-yellow-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">2</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Proceed to Window 1 for Submission of Vessel Documents</h3>
+                                <p class="mb-3">Upon arrival, the vessel agent must complete the following:</p>
+                                <ul class="space-y-2 mb-4">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-yellow-500 mr-2 mt-1"></i>
+                                        <span>Accomplish Dockage Report</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-yellow-500 mr-2 mt-1"></i>
+                                        <span>Fill out Vessel's Information Sheet (If your Vessel is not yet Registered to our iPorts)</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-yellow-500 mr-2 mt-1"></i>
+                                        <span>Fill out Vessel's Logbook</span>
+                                    </li>
+                                </ul>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
+                                    <h4 class="font-medium text-yellow-700 mb-2">Required Documents:</h4>
+                                    <ul class="space-y-2">
+                                        <li class="document-item">Vessel Coasting Manifest</li>
+                                        <li class="document-item">Roll Book</li>
+                                        <li class="document-item">Bill of Lading (for Wharfage Cargo on Board)</li>
+                                        <li class="document-item">Application for Berth / Anchorage Form</li>
+                                        <li class="document-item">Certificate of Registry (for Vessel arriving for the first time)</li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="process-card bg-yellow-50 rounded-lg p-6 mb-8 relative step-connector text-yellow-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-yellow-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">3</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Clearance from Other Agencies</h3>
+                                <p class="mb-3">Coordinate with the following agencies for necessary clearances:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-yellow-200">
+                                        <h4 class="font-medium text-yellow-700 mb-1 flex items-center">
+                                            <i class="fas fa-landmark mr-2"></i>Bureau of Customs (BOC)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For customs clearance and inspection of cargo</p>
+                                        <div class="mt-2 text-xs text-yellow-600">
+                                            <i class="fas fa-map-marker-alt mr-1"></i> Office Location: Port Area
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-yellow-200">
+                                        <h4 class="font-medium text-yellow-700 mb-1 flex items-center">
+                                            <i class="fas fa-shield-virus mr-2"></i>Bureau of Quarantine (BOQ)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For health and sanitation clearance</p>
+                                        <div class="mt-2 text-xs text-yellow-600">
+                                            <i class="fas fa-phone-alt mr-1"></i> Contact: (053) 123-4567
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-yellow-200">
+                                        <h4 class="font-medium text-yellow-700 mb-1 flex items-center">
+                                            <i class="fas fa-anchor mr-2"></i>Philippine Coast Guard (PCG)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For maritime safety inspection</p>
+                                        <div class="mt-2 text-xs text-yellow-600">
+                                            <i class="fas fa-clock mr-1"></i> Operating Hours: 8AM-5PM
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-yellow-200">
+                                        <h4 class="font-medium text-yellow-700 mb-1 flex items-center">
+                                            <i class="fas fa-ship mr-2"></i>MARINA (if applicable)
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For vessel documentation verification</p>
+                                        <div class="mt-2 text-xs text-yellow-600">
+                                            <i class="fas fa-envelope mr-1"></i> Email: marina@domain.com
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-4">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-info-circle text-yellow-700"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-yellow-700">
+                                                <strong>Note:</strong> Some agencies may require additional documents specific to your vessel or cargo type. Please check with each agency for complete requirements.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="process-card bg-yellow-50 rounded-lg p-6 text-yellow-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-yellow-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">4</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Issuance of Entrance Clearance</h3>
+                                <p class="mb-3">PPA evaluates compliance with all requirements:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <div class="flex items-center">
+                                            <div class="bg-green-100 text-green-800 p-2 rounded-full mr-3">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-green-700">If Compliant</h4>
+                                                <p class="text-sm text-gray-600">PPA issues Entrance Clearance within 1-2 hours after document verification</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-yellow-200">
+                                        <div class="flex items-center">
+                                            <div class="bg-blue-100 text-yellow-800 p-2 rounded-full mr-3">
+                                                <i class="fas fa-anchor"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-yellow-700">Vessel Berthing</h4>
+                                                <p class="text-sm text-gray-600">Vessel is authorized to berth at the port according to assigned schedule</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 bg-white p-4 rounded-lg shadow-sm border border-yellow-200">
+                                    <h4 class="font-medium text-yellow-700 mb-2 flex items-center">
+                                        <i class="fas fa-file-invoice-dollar mr-2"></i> Applicable Fees
+                                    </h4>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fee Type</th>
+                                                    <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Basis</th>
+                                                    <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <tr>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Dockage Fee</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Per GT per day</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">₱0.50</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Berthing Fee</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">Per GT</td>
+                                                    <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">₱0.25</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Cargo Withdrawal Section -->
+        <section id="withdrawal-section" class="process-section hidden">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border border-gray-100">
+                <div class="p-6 bg-gradient-to-r from-green-700 to-green-600 text-white">
+                    <div class="section-icon bg-green-800">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-center">Cargo Withdrawal (Outbound/Import)</h2>
+                    <p class="text-center text-green-100 mt-2">Procedures for withdrawing imported cargo from the port</p>
+                </div>
+                <div class="p-6">
+                    <!-- Step 1 -->
+                    <div class="process-card bg-green-50 rounded-lg p-6 mb-8 relative step-connector text-green-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">1</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Arrival of Import Cargo</h3>
+                                <div class="space-y-3 mb-4">
+                                    <div class="flex items-start">
+                                        <div class="bg-green-100 text-green-800 p-1 rounded-full mr-3 mt-1">
+                                            <i class="fas fa-box-open text-sm"></i>
+                                        </div>
+                                        <p class="flex-1">Cargo is unloaded and stored in designated area with proper documentation</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="bg-green-100 text-green-800 p-1 rounded-full mr-3 mt-1">
+                                            <i class="fas fa-file-invoice text-sm"></i>
+                                        </div>
+                                        <p class="flex-1">Cargo is documented and assessed by BOC for customs duties and taxes</p>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                    <h4 class="font-medium text-green-700 mb-2 flex items-center">
+                                        <i class="fas fa-clock mr-2"></i> Storage Timeline
+                                    </h4>
+                                    <p class="text-sm text-gray-700">
+                                        Free storage period is 5 days from date of discharge. After this period, demurrage charges will apply.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="process-card bg-green-50 rounded-lg p-6 mb-8 relative step-connector text-green-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">2</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Documentation</h3>
+                                <p class="mb-3">Importer or authorized representative submits the following documents:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-2">Primary Documents</h4>
+                                        <ul class="space-y-2">
+                                            <li class="document-item">Original Bill of Lading</li>
+                                            <li class="document-item">Import Entry and Internal Revenue Declaration (IEIRD)</li>
+                                            <li class="document-item">Commercial Invoice</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-2">Supporting Documents</h4>
+                                        <ul class="space-y-2">
+                                            <li class="document-item">Official Receipt from BOC</li>
+                                            <li class="document-item">PPA Wharfage Receipt</li>
+                                            <li class="document-item">Delivery Order</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="bg-green-100 border-l-4 border-green-500 p-4">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-exclamation-triangle text-green-700"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-green-700">
+                                                <strong>Important:</strong> All documents must be properly notarized and authenticated. Photocopies must be certified true copies.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="process-card bg-green-50 rounded-lg p-6 mb-8 relative step-connector text-green-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">3</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">PPA Payment</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-1 flex items-center">
+                                            <i class="fas fa-money-bill-wave mr-2"></i>Payment Methods
+                                        </h4>
+                                        <ul class="text-sm text-gray-600 space-y-2 mt-2">
+                                            <li class="flex items-center">
+                                                <i class="fas fa-building mr-2 text-green-600"></i> 
+                                                <div>
+                                                    <p class="font-medium">PPA Cashier</p>
+                                                    <p class="text-xs text-gray-500">Window 3, Ground Floor, PPA Office</p>
+                                                </div>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <i class="fas fa-laptop mr-2 text-green-600"></i> 
+                                                <div>
+                                                    <p class="font-medium">Online System</p>
+                                                    <p class="text-xs text-gray-500">Via iPorts Payment Portal</p>
+                                                </div>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <i class="fas fa-mobile-alt mr-2 text-green-600"></i> 
+                                                <div>
+                                                    <p class="font-medium">Mobile Payment</p>
+                                                    <p class="text-xs text-gray-500">GCash, PayMaya available</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-1 flex items-center">
+                                            <i class="fas fa-receipt mr-2"></i>Applicable Fees
+                                        </h4>
+                                        <ul class="text-sm text-gray-600 space-y-2 mt-2">
+                                            <li class="flex justify-between">
+                                                <span>Wharfage Charges</span>
+                                                <span class="font-medium">1% of CIF Value</span>
+                                            </li>
+                                            <li class="flex justify-between">
+                                                <span>Arrastre Charges</span>
+                                                <span class="font-medium">₱50-₱200 per ton</span>
+                                            </li>
+                                            <li class="flex justify-between">
+                                                <span>Storage Fees</span>
+                                                <span class="font-medium">₱10/day after free period</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                    <h4 class="font-medium text-green-700 mb-2 flex items-center">
+                                        <i class="fas fa-percentage mr-2"></i> Discounts Available
+                                    </h4>
+                                    <p class="text-sm text-gray-700">
+                                        Early payment (within 3 days of assessment) qualifies for 5% discount on wharfage charges.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="process-card bg-green-50 rounded-lg p-6 mb-8 relative step-connector text-green-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">4</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Release Permit</h3>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200 mb-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-green-100 text-green-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-green-700">PPA Issues</h4>
+                                            <p class="text-sm text-gray-600">Gate Pass / Withdrawal Permit after payment verification</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-2 flex items-center">
+                                            <i class="fas fa-user-check mr-2"></i> Authorization Requirements
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            If representative is claiming, must present:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Authorization Letter</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Valid ID (Original + Copy)</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-2 flex items-center">
+                                            <i class="fas fa-truck-loading mr-2"></i> Vehicle Requirements
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            For truck withdrawal, must present:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Vehicle Registration</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Driver's License</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="process-card bg-green-50 rounded-lg p-6 text-green-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">5</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Cargo Release</h3>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200 mb-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-green-100 text-green-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-green-700">Final Step</h4>
+                                            <p class="text-sm text-gray-600">Cargo is released and allowed to exit the port gate after inspection</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-2 flex items-center">
+                                            <i class="fas fa-clipboard-check mr-2"></i> Inspection Process
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            All cargoes are subject to random inspection by PPA and BOC personnel to verify:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Document-Verification</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Quantity Verification</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Condition Check</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-green-200">
+                                        <h4 class="font-medium text-green-700 mb-2 flex items-center">
+                                            <i class="fas fa-door-open mr-2"></i> Gate Procedures
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            Upon exit, present the following to gate security:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Gate Pass</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Driver's License</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-green-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Vehicle Documents</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cargo Entry Section -->
+        <section id="entry-section" class="process-section hidden">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border border-gray-100">
+                <div class="p-6 bg-gradient-to-r from-orange-600 to-orange-500 text-white">
+                    <div class="section-icon bg-orange-700">
+                        <i class="fas fa-boxes-packing"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-center">Cargo Entry (Inbound/Export)</h2>
+                    <p class="text-center text-orange-100 mt-2">Procedures for bringing export cargo into the port</p>
+                </div>
+                <div class="p-6">
+                    <!-- Step 1 -->
+                    <div class="process-card bg-orange-50 rounded-lg p-6 mb-8 relative step-connector text-orange-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">1</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Pre-Loading Documents</h3>
+                                <p class="mb-3">Exporter or authorized representative submits the following documents:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-2">Primary Documents</h4>
+                                        <ul class="space-y-2">
+                                            <li class="document-item">Export Declaration</li>
+                                            <li class="document-item">Packing List</li>
+                                            <li class="document-item">Commercial Invoice</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-2">Shipping Documents</h4>
+                                        <ul class="space-y-2">
+                                            <li class="document-item">Bill of Lading</li>
+                                            <li class="document-item">Gate Pass Request</li>
+                                            <li class="document-item">Export Permit (if applicable)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="bg-orange-100 border-l-4 border-orange-500 p-4">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-info-circle text-orange-700"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-orange-700">
+                                                <strong>Note:</strong> All documents must be submitted in triplicate (original + 2 copies) for proper processing.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="process-card bg-orange-50 rounded-lg p-6 mb-8 relative step-connector text-orange-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">2</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Inspection and Payment</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-1 flex items-center">
+                                            <i class="fas fa-search mr-2"></i>Inspection Process
+                                        </h4>
+                                        <p class="text-sm text-gray-600">PPA and BOC inspect cargo for:</p>
+                                        <ul class="text-sm text-gray-600 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Document-Verification</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Quantity Verification</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Condition Check</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-1 flex items-center">
+                                            <i class="fas fa-money-bill-wave mr-2"></i>Payment Process
+                                        </h4>
+                                        <p class="text-sm text-gray-600">Applicable fees include:</p>
+                                        <ul class="text-sm text-gray-600 mt-2 space-y-1">
+                                            <li class="flex justify-between">
+                                                <span>Handling/Arrastre Fees</span>
+                                                <span class="font-medium">₱50-₱200 per ton</span>
+                                            </li>
+                                            <li class="flex justify-between">
+                                                <span>Wharfage Fees</span>
+                                                <span class="font-medium">1% of FOB Value</span>
+                                            </li>
+                                            <li class="flex justify-between">
+                                                <span>Documentation Fees</span>
+                                                <span class="font-medium">₱100-₱500</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                    <h4 class="font-medium text-orange-700 mb-2 flex items-center">
+                                        <i class="fas fa-calendar-alt mr-2"></i> Processing Timeline
+                                    </h4>
+                                    <p class="text-sm text-gray-700">
+                                        Inspection and payment processing typically takes 2-4 hours during normal working days, depending on cargo volume.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="process-card bg-orange-50 rounded-lg p-6 mb-8 relative step-connector text-orange-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">3</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Gate Entry Pass</h3>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200 mb-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-orange-100 text-orange-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-file-signature"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-orange-700">PPA Issues</h4>
+                                            <p class="text-sm text-gray-600">Cargo Entry Permit or Gate Pass after successful inspection and payment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-2 flex items-center">
+                                            <i class="fas fa-id-card mr-2"></i> Identification Requirements
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            Driver/trucker must present:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Valid Driver's License</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Company ID (if applicable)</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-2 flex items-center">
+                                            <i class="fas fa-truck mr-2"></i> Vehicle Requirements
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            Vehicle must have:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Valid Registration</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Roadworthiness</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="process-card bg-orange-50 rounded-lg p-6 text-orange-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">4</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Cargo Loading</h3>
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200 mb-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-orange-100 text-orange-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-ship"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-orange-700">Final Step</h4>
+                                            <p class="text-sm text-gray-600">Cargo enters the port and is loaded onto the vessel according to stowage plan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-2 flex items-center">
+                                            <i class="fas fa-clipboard-list mr-2"></i> Loading Procedures
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            Loading operations follow:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Vessel Schedule</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Safety Protocols</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Supervision by PPA</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-orange-200">
+                                        <h4 class="font-medium text-orange-700 mb-2 flex items-center">
+                                            <i class="fas fa-boxes mr-2"></i> Cargo Handling
+                                        </h4>
+                                        <p class="text-sm text-gray-700">
+                                            Special handling for:
+                                        </p>
+                                        <ul class="text-sm text-gray-700 mt-2 space-y-1">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Perishable Goods</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Hazardous Materials</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check text-orange-500 mr-2 mt-1 text-xs"></i>
+                                                <span>Oversized Cargo</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Permits Section -->
+        <section id="permits-section" class="process-section hidden">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border border-gray-100">
+                <div class="p-6 bg-gradient-to-r from-purple-700 to-purple-600 text-white">
+                    <div class="section-icon bg-purple-800">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-center">Other Permits</h2>
+                    <p class="text-center text-purple-100 mt-2">Additional permits and clearances for port activities</p>
+                </div>
+                <div class="p-6">
+                    <!-- Part A -->
+                    <div class="process-card bg-purple-50 rounded-lg p-6 mb-8 text-purple-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">A</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Permits for Port Activities</h3>
+                                <p class="mb-3">Includes the following activities requiring special permits:</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <h4 class="font-medium text-purple-700 mb-1 flex items-center">
+                                            <i class="fas fa-tools mr-2"></i>Maintenance Work
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For repairs and facility maintenance within port premises</p>
+                                        <div class="mt-2 text-xs text-purple-600">
+                                            <i class="fas fa-clock mr-1"></i> Processing Time: 1-2 working days
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <h4 class="font-medium text-purple-700 mb-1 flex items-center">
+                                            <i class="fas fa-clipboard-check mr-2"></i>Surveys
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For inspections and assessments by third parties</p>
+                                        <div class="mt-2 text-xs text-purple-600">
+                                            <i class="fas fa-clock mr-1"></i> Processing Time: 3-5 working days
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <h4 class="font-medium text-purple-700 mb-1 flex items-center">
+                                            <i class="fas fa-camera mr-2"></i>Photography/Filming
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For media and documentation purposes</p>
+                                        <div class="mt-2 text-xs text-purple-600">
+                                            <i class="fas fa-clock mr-1"></i> Processing Time: 3 working days
+                                        </div>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <h4 class="font-medium text-purple-700 mb-1 flex items-center">
+                                            <i class="fas fa-bolt mr-2"></i>Utility Installation
+                                        </h4>
+                                        <p class="text-sm text-gray-600">For electrical and other utility works</p>
+                                        <div class="mt-2 text-xs text-purple-600">
+                                            <i class="fas fa-clock mr-1"></i> Processing Time: 5-7 working days
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Part B -->
+                    <div class="process-card bg-purple-50 rounded-lg p-6 text-purple-800">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 mt-1 font-bold">B</div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Application Process</h3>
+                                <div class="space-y-4 mb-6">
+                                    <div class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <div class="bg-purple-100 text-purple-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-purple-700">Step 1: Submit Application</h4>
+                                            <p class="text-sm text-gray-700 mt-1">
+                                                Submit Letter of Intent or Permit Application at PPA Administrative Office, Window 5
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <div class="bg-purple-100 text-purple-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-paperclip"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-purple-700">Step 2: Attach Requirements</h4>
+                                            <ul class="text-sm text-gray-700 mt-1 space-y-1">
+                                                <li class="flex items-start">
+                                                    <i class="fas fa-check text-purple-500 mr-2 mt-1 text-xs"></i>
+                                                    <span>Valid ID (Original + Copy)</span>
+                                                </li>
+                                                <li class="flex items-start">
+                                                    <i class="fas fa-check text-purple-500 mr-2 mt-1 text-xs"></i>
+                                                    <span>Authorization Letter (if representative)</span>
+                                                </li>
+                                                <li class="flex items-start">
+                                                    <i class="fas fa-check text-purple-500 mr-2 mt-1 text-xs"></i>
+                                                    <span>Safety Plan (for hazardous activities)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <div class="bg-purple-100 text-purple-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-purple-700">Step 3: Pay Applicable Fees</h4>
+                                            <p class="text-sm text-gray-700 mt-1">
+                                                Fees vary depending on activity type and duration. Minimum fee is ₱500.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <div class="bg-purple-100 text-purple-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-purple-700">Step 4: PPA Review</h4>
+                                            <p class="text-sm text-gray-700 mt-1">
+                                                PPA reviews application within the specified processing time.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start bg-white p-4 rounded-lg shadow-sm border border-purple-200">
+                                        <div class="bg-purple-100 text-purple-800 p-2 rounded-full mr-3">
+                                            <i class="fas fa-stamp"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-purple-700">Step 5: Issuance of Permit</h4>
+                                            <p class="text-sm text-gray-700 mt-1">
+                                                Approved permits can be claimed at Window 5 upon presentation of payment receipt.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-purple-100 border-l-4 border-purple-500 p-4">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-exclamation-triangle text-purple-700"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-purple-700">
+                                                <strong>Important:</strong> All permits are non-transferable and valid only for the specified activity, date, and location. Any changes must be reported to PPA for approval.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border border-gray-100">
+            <div class="p-6 bg-gradient-to-r from-gray-700 to-gray-600 text-white">
+                <h2 class="text-2xl font-bold text-center">Frequently Asked Questions</h2>
+                <p class="text-center text-gray-100 mt-2">Common inquiries about port transactions</p>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div class="border-b border-gray-200 pb-4">
+                        <button class="flex justify-between items-center w-full text-left font-medium text-gray-700 hover:text-blue-600 focus:outline-none" onclick="toggleFAQ(1)">
+                            <span>What are the operating hours of PPA-PMO Western Leyte/Biliran?</span>
+                            <i class="fas fa-chevron-down text-blue-500 transition-transform duration-200" id="faq-icon-1"></i>
+                        </button>
+                        <div class="mt-2 text-gray-600 hidden" id="faq-content-1">
+                            <p>The PPA-PMO office is open from Monday to Friday, 8:00 AM to 5:00 PM, with no noon break. For vessel-related transactions outside these hours, please coordinate with the Port Operations Division.</p>
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-200 pb-4">
+                        <button class="flex justify-between items-center w-full text-left font-medium text-gray-700 hover:text-blue-600 focus:outline-none" onclick="toggleFAQ(2)">
+                            <span>How can I track the status of my application?</span>
+                            <i class="fas fa-chevron-down text-blue-500 transition-transform duration-200" id="faq-icon-2"></i>
+                        </button>
+                        <div class="mt-2 text-gray-600 hidden" id="faq-content-2">
+                            <p>You can track your application status through:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>iPorts tracking system (online)</li>
+                                <li>PPA Customer Service Hotline: (053) 123-4567</li>
+                                <li>Email inquiry to pmo-westernleyte@ppa.com.ph</li>
+                                <li>In-person inquiry at Window 7 (Information Desk)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-200 pb-4">
+                        <button class="flex justify-between items-center w-full text-left font-medium text-gray-700 hover:text-blue-600 focus:outline-none" onclick="toggleFAQ(3)">
+                            <span>What payment methods are accepted for port fees?</span>
+                            <i class="fas fa-chevron-down text-blue-500 transition-transform duration-200" id="faq-icon-3"></i>
+                        </button>
+                        <div class="mt-2 text-gray-600 hidden" id="faq-content-3">
+                            <p>PPA-PMO Western Leyte/Biliran accepts the following payment methods:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <h4 class="font-medium text-gray-800 flex items-center">
+                                        <i class="fas fa-money-bill-wave mr-2 text-green-500"></i> Cash Payments
+                                    </h4>
+                                    <p class="text-sm mt-1">At PPA Cashier (Window 7) or "Window 8 if available"</p>
+                                </div>
+                       <!--     <div class="bg-gray-50 p-3 rounded-lg">
+                                    <h4 class="font-medium text-gray-800 flex items-center">
+                                        <i class="fas fa-credit-card mr-2 text-blue-500"></i> Credit/Debit Cards
+                                    </h4>
+                                    <p class="text-sm mt-1">Visa, Mastercard accepted</p>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <h4 class="font-medium text-gray-800 flex items-center">
+                                        <i class="fas fa-mobile-alt mr-2 text-purple-500"></i> Mobile Payments
+                                    </h4>
+                                    <p class="text-sm mt-1">GCash, PayMaya</p>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <h4 class="font-medium text-gray-800 flex items-center">
+                                        <i class="fas fa-university mr-2 text-yellow-500"></i> Bank Transfers
+                                    </h4>
+                                    <p class="text-sm mt-1">Through authorized banks</p>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border border-gray-100">
+            <div class="p-6 bg-gradient-to-r from-blue-700 to-blue-600 text-white">
+                <h2 class="text-2xl font-bold text-center">Contact Information</h2>
+                <p class="text-center text-blue-100 mt-2">Get in touch with PPA-PMO Western Leyte/Biliran</p>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-4 rounded-lg text-center">
+                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-map-marker-alt text-blue-600"></i>
+                        </div>
+                        <h3 class="font-medium text-blue-800 mb-1">Address</h3>
+                        <p class="text-sm text-gray-700">Port Area, Ormoc City, Leyte 6541</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg text-center">
+                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-phone-alt text-blue-600"></i>
+                        </div>
+                        <h3 class="font-medium text-blue-800 mb-1">Phone</h3>
+                        <p class="text-sm text-gray-700">(053) 123-4567</p>
+                        <p class="text-sm text-gray-700">(053) 123-4568 (Fax)</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg text-center">
+                        <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-envelope text-blue-600"></i>
+                        </div>
+                        <h3 class="font-medium text-blue-800 mb-1">Email</h3>
+                        <p class="text-sm text-gray-700">pmo-westernleyte@ppa.com.ph</p>
+                        <p class="text-sm text-gray-700">ppawesternleyte@gmail.com</p>
+                    </div>
+                </div>
+                <div class="mt-6 bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-medium text-blue-800 mb-2 text-center">Office Hours</h3>
+                    <div class="flex justify-center">
+                        <table class="text-sm text-gray-700">
+                            <tr>
+                                <td class="pr-4 py-1">Monday - Friday</td>
+                                <td class="py-1">8:00 AM - 5:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-4 py-1">Saturday</td>
+                                <td class="py-1">8:00 AM - 12:00 NN</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-4 py-1">Sunday/Holidays</td>
+                                <td class="py-1">Closed (Emergency only)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-gray-600 text-sm">
+            <div class="flex justify-center space-x-4 mb-4">
+                <a href="#" class="text-blue-600 hover:text-blue-800">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="text-blue-400 hover:text-blue-600">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-red-500 hover:text-red-700">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="text-gray-700 hover:text-gray-900">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </div>
+            <p>© 2023 Philippine Ports Authority - Port Management Office of Western Leyte/Biliran</p>
+            <p class="mt-1">For inquiries, please contact the PPA-PMO office during working hours</p>
+        </footer>
+    </div>
+
+    <!-- Floating Help Button -->
+    <div class="floating-help">
+        <button class="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition animate-bounce-slow">
+            <i class="fas fa-question text-xl"></i>
+        </button>
+    </div>
+
+    <script>
+        // Show the first section by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('entrance');
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.process-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show the selected section
+            document.getElementById(sectionId + '-section').classList.remove('hidden');
+
+            // Update active tab styling
+            document.querySelectorAll('.nav-tab').forEach(button => {
+                button.classList.remove('bg-blue-600', 'text-white');
+                button.classList.add('bg-blue-100', 'text-blue-800');
+                button.classList.remove('active');
+            });
+
+            // Set the clicked button as active
+            const activeButton = document.querySelector(`button[onclick="showSection('${sectionId}')"]`);
+            if (activeButton) {
+                activeButton.classList.remove('bg-blue-100', 'text-blue-800');
+                activeButton.classList.add('bg-blue-600', 'text-white');
+                activeButton.classList.add('active');
+            }
+        }
+
+        function toggleFAQ(id) {
+            const content = document.getElementById(`faq-content-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+    </script>
+</body>
+</html>
